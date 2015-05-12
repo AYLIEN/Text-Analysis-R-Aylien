@@ -25,27 +25,26 @@ aylienAPI<-function(APPLICATION_ID, APPLICATION_KEY, endpoint, parameters, type)
   resp
 }
 
-# Enter your API credentials. Create an account to get your application id and key.
+# Enter your API credentials. Create an account to get your application id and key on http://developer.aylien.com/signup
 
-APPLICATION_ID = '---------'
-APPLICATION_KEY = '------------------------------'
+APPLICATION_ID = 'YOUR_APPLICATION_ID'
+APPLICATION_KEY = 'YOUR_APPLICATION_KEY'
 
 # Aylien Endpoint Reference
 # http://aylien.com/text-api-doc
 
-endpoint = "summarize"
+endpoint = "classify"
 parameters = "http://www.bbc.com/sport/0/football/25912393"
 type = "url"
 
 results<-aylienAPI(APPLICATION_ID, APPLICATION_KEY, endpoint, parameters, type)
 
 # Converting the XML o/p to a data frame
+
 resultsdf<-ldply(xmlToList(results), data.frame)
 View(resultsdf)
 
 # You can retrieve data using XPATH from the XML result
 
 PARSED<-xmlInternalTreeParse(results)
-xpathSApply(PARSED, "//polarity",xmlValue)
-
-
+View(xpathSApply(PARSED, "//category",xmlValue))
